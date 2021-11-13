@@ -83,6 +83,16 @@ data "aws_iam_policy_document" "assume_role_policy" {
   }
 }
 
+resource "aws_iam_role_policy_attachment" "ecs_ec2_role" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+resource "aws_iam_role_policy_attachment" "amazon_ssm_managed_instance_core" {
+  count = var.include_ssm ? 1 : 0
+
+  role       = aws_iam_role.this.id
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
 
 resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
   role       = "${aws_iam_role.ecsTaskExecutionRole.name}"
@@ -95,18 +105,6 @@ resource "aws_ecs_service" "my_first_service" {
   task_definition = "${aws_ecs_task_definition.my_first_task.arn}" # Reference of task our service will spin up
   launch_type     = "FARGATE"
   desired_count   = 2 # Number of containers to deploy
-
-
-resource "aws_iam_role_policy_attachment" "ecs_ec2_role" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
-}
-
-resource "aws_iam_role_policy_attachment" "amazon_ssm_managed_instance_core" {
-  count = var.include_ssm ? 1 : 0
-
-  role       = aws_iam_role.this.id
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-}
 
 
   load_balancer {
