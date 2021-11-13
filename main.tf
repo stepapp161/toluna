@@ -1,6 +1,7 @@
 provider "docker" {
-  host = "hello-world"
-}
+      source  = "kreuzwerker/docker"
+      version = "2.15.0"
+    }
 
 # Pulls the image
 resource "docker_image" "latest" {
