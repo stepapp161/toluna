@@ -127,7 +127,6 @@ resource "aws_lb_target_group" "target_group" {
   target_type = "ip"
   vpc_id      = "${aws_default_vpc.default_vpc.id}" # Reference the default VPC
   health_check {
-    matcher = "200,301"
     path = "/sample/"
   }
 }
