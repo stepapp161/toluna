@@ -1,5 +1,5 @@
 provider "docker" {
-  host = "hello-wworld"
+  host = "hello-world"
 }
 
 # Pulls the image
