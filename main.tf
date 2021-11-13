@@ -1,7 +1,17 @@
+provider "docker" {
+  host = "hello-wworld"
+}
+
+# Pulls the image
+resource "docker_image" "latest" {
+  name = "hello-world:latest"
+}
+
 provider "aws" {
   version = "~> 2.0"
   region  = "us-east-2" 
 }
+
 
 
 # Reference to our default VPC
@@ -15,19 +25,6 @@ resource "aws_default_subnet" "default_subnet_a" {
 
 resource "aws_default_subnet" "default_subnet_b" {
   availability_zone = "us-east-2b"
-}
-
-data "docker_registry_image" "ubuntu" {
-  name = "ubuntu:precise"
-}
-
-resource "docker_image" "ubuntu" {
-  name          = data.docker_registry_image.ubuntu.name
-  pull_triggers = [data.docker_registry_image.ubuntu.sha256_digest]
-}
-
-data "docker_image" "latest" {
-  name = "hello-world"
 }
 
 
@@ -89,6 +86,18 @@ resource "aws_ecs_service" "my_first_service" {
   task_definition = "${aws_ecs_task_definition.my_first_task.arn}" # Reference of task our service will spin up
   launch_type     = "FARGATE"
   desired_count   = 2 # Number of containers to deploy
+
+
+resource "aws_iam_role_policy_attachment" "ecs_ec2_role" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+resource "aws_iam_role_policy_attachment" "amazon_ssm_managed_instance_core" {
+  count = var.include_ssm ? 1 : 0
+
+  role       = aws_iam_role.this.id
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
 
 
   load_balancer {
