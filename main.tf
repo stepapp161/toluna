@@ -95,6 +95,7 @@ resource "aws_ecs_service" "my_first_service" {
   task_definition = "${aws_ecs_task_definition.my_first_task.arn}" # Reference of task our service will spin up
   launch_type     = "FARGATE"
   desired_count   = 2 # Number of containers to deploy
+  load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Reference our load balancer
 
 
   load_balancer {
@@ -122,7 +123,6 @@ resource "aws_alb" "application_load_balancer" {
 
 resource "aws_lb_target_group" "target_group" {
   name        = "target-group"
-  load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Reference our load balancer
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
