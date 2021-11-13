@@ -122,6 +122,7 @@ resource "aws_alb" "application_load_balancer" {
 
 resource "aws_lb_target_group" "target_group" {
   name        = "target-group"
+  load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Reference our load balancer
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
