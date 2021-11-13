@@ -1,5 +1,5 @@
 provider "aws" {
-  version = "3.64.2"
+  version = "~> 2.0"
   region  = "us-east-2" 
 }
 
@@ -17,10 +17,19 @@ resource "aws_default_subnet" "default_subnet_b" {
   availability_zone = "us-east-2b"
 }
 
-
-resource "aws_ecr_repository" "toluna_repo" {
-  name = "toluna-repo" 
+data "docker_registry_image" "ubuntu" {
+  name = "ubuntu:precise"
 }
+
+resource "docker_image" "ubuntu" {
+  name          = data.docker_registry_image.ubuntu.name
+  pull_triggers = [data.docker_registry_image.ubuntu.sha256_digest]
+}
+
+data "docker_image" "latest" {
+  name = "hello-world"
+}
+
 
 resource "aws_ecs_cluster" "my_cluster" {
   name = "my-cluster" # Name of cluster
@@ -32,7 +41,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
   [
     {
       "name": "my-first-task",
-      "image": "${aws_ecr_repository.toluna_repo.repository_url}",
+      "image": "hello-world",
       "essential": true,
       "portMappings": [
         {
