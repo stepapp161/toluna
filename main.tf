@@ -4,6 +4,10 @@ terraform {
       source  = "kreuzwerker/docker"
       version = "2.15.0"
     }
+    aws = {
+      region = "us-east-2"
+      version = "~> 2.0"
+    }
   }
 }
 
@@ -16,10 +20,10 @@ resource "docker_image" "latest" {
   name = "hello-world:latest"
 }
 
-provider "aws" {
-  version = "~> 2.0"
-  region  = "us-east-2" 
-}
+#provider "aws" {
+ # version = "~> 2.0"
+  #region  = "us-east-2" 
+#}
 
 
 
