@@ -3,10 +3,10 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     name                 = "prometheus-tg"
     port                 = "${var.prometheus_container_host_port}"
     protocol             = "HTTP"
-    vpc_id               = "${var.vpc_id}"
+    vpc_id      = "${aws_default_vpc.default_vpc.id}"
     deregistration_delay = 5
     target_type          = "ip"
-    depends_on           = ["aws_alb.demo_alb_ecs_prometheus"]
+    depends_on           = ["aws_alb.application_load_balancer"]
 
     lifecycle {
         create_before_destroy = true
@@ -23,14 +23,10 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
         timeout             = "3"
     }
 
-    tags = "${merge(var.common_tags, map(
-        "Name", "terraform-demo-alb-target-group-ip-ecs-prometheus",
-        "Description", "Target Group for Prometheus",
-    ))}"
 }
 
 resource "aws_alb_listener" "demo_alb_listener_ecs_prometheus_front_end_http" {
-    load_balancer_arn = "${aws_alb.demo_alb_ecs_prometheus.arn}"
+    load_balancer_arn = "${aws_alb.application_load_balancer.arn}"
     port              = "80"
     protocol          = "HTTP"
 
