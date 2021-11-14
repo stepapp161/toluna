@@ -6,7 +6,7 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     vpc_id      = "${aws_default_vpc.default_vpc.id}"
     deregistration_delay = 5
     target_type          = "ip"
-    depends_on           = ["aws_alb.application_load_balancer"]
+    depends_on           = [aws_alb.application_load_balancer]
 
     lifecycle {
         create_before_destroy = true
