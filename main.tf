@@ -27,8 +27,8 @@ provider "aws" {
 
 
 # Reference to our default VPC
-#resource "aws_default_vpc" "default_vpc" {
-#}
+resource "aws_default_vpc" "default_vpc" {
+}
 
 # Reference to our default subnets
 resource "aws_default_subnet" "default_subnet_a" {
@@ -130,7 +130,7 @@ resource "aws_lb_target_group" "target_group" {
   port        = "80"
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = module.vpc.vpc_id # Reference the default VPC
+  vpc_id      = ["${aws_default_vpc.default_vpc.id}"] # Reference the default VPC
   depends_on  = [aws_alb.application_load_balancer]
   health_check {
     path = "/sample/"
