@@ -19,7 +19,6 @@ resource "aws_security_group" "service_security_group" {
 
 resource "aws_security_group" "load_balancer_security_group" {
   ingress {
-    vpc_id      = ["${aws_default_vpc.default_vpc.id}"]
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -27,7 +26,6 @@ resource "aws_security_group" "load_balancer_security_group" {
   }
 
   egress {
-    vpc_id      = ["${aws_default_vpc.default_vpc.id}"]
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
