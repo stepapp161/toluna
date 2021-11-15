@@ -30,11 +30,11 @@ resource "aws_default_vpc" "default_vpc" {
 
 # Reference to our default subnets
 resource "aws_default_subnet" "default_subnet_a" {
-  availability_zone = var.region.a
+  availability_zone = "us-east-2a"
 }
 
 resource "aws_default_subnet" "default_subnet_b" {
-  availability_zone = var.region.b
+  availability_zone = "us-east-2b"
 }
 
 
