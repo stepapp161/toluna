@@ -26,7 +26,6 @@ provider "aws" {
 
 
 resource "aws_default_security_group" "my_first_service" {
-  security_groups = ["${aws_default_security_group.application_load_balancer.id}"]
 }
 
 resource "aws_default_security_group" "application_load_balancer" {
