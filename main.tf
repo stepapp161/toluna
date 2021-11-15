@@ -20,9 +20,7 @@ resource "docker_image" "latest" {
 }
 
 provider "aws" {
- # version = "~> 2.0"
-  #region  = "us-east-2" 
-  region = var.region
+  region  = "us-east-2" 
 }
 
 
