@@ -20,9 +20,17 @@ resource "aws_ecs_task_definition" "prometheus_task" {
           "target": prometheus.yml /etc/prometheus
         }
        ],
+      "memory": 512,
+      "cpu": 256,
       "networks": "apod"
     }
    ]
+  DEFINITION
+  requires_compatibilities = ["FARGATE"] # Stating that we are using ECS Fargate
+  network_mode             = "awsvpc"    # Using awsvpc as our network mode as this is a  Fargate requirement
+  memory                   = 512         # Specifying the memory our container requires
+  cpu                      = 256         # Specifying the CPU our container requires
+  execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
 }
  
 resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
