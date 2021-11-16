@@ -88,7 +88,7 @@ resource "aws_ecs_service" "my_first_service" {
 
 
 resource "aws_alb" "application_load_balancer" {
-  name               = "tes-lb-tf" # Name of load balancer
+  name               = "test-lb-tf" # Name of load balancer
   load_balancer_type = "application"
   subnets = [ # Reference of default subnets
     "${aws_default_subnet.default_subnet_a.id}",
@@ -99,7 +99,7 @@ resource "aws_alb" "application_load_balancer" {
 
 
 resource "aws_lb_target_group" "target_group" {
-  name        = "target_group"
+  name        = "target-group"
   port        = "80"
   protocol    = "HTTP"
   target_type = "ip"
