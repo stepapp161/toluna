@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
   container_definitions    = <<DEFINITION
   [
     {
-      "name": "my_first_task",
+      "name": "my-first-task",
       "image": "hello-world",
       "essential": true,
       "portMappings": [
@@ -66,7 +66,7 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 }
 
 resource "aws_ecs_service" "my_first_service" {
-  name            = "my_first_service"                             # Name of first service
+  name            = "my-first-service"                             # Name of first service
   cluster         = "${aws_ecs_cluster.my_cluster.id}"             # Reference of created Cluster
   task_definition = "${aws_ecs_task_definition.my_first_task.arn}" # Reference of task our service will spin up
   launch_type     = "FARGATE"
@@ -88,7 +88,7 @@ resource "aws_ecs_service" "my_first_service" {
 
 
 resource "aws_alb" "application_load_balancer" {
-  name               = "test_lb_tf" # Name of load balancer
+  name               = "tes-lb-tf" # Name of load balancer
   load_balancer_type = "application"
   subnets = [ # Reference of default subnets
     "${aws_default_subnet.default_subnet_a.id}",
