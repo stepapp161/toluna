@@ -102,7 +102,7 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
 
 resource "aws_alb_listener" "demo_alb_listener_ecs_prometheus_front_end_http" {
    load_balancer_arn = "${aws_alb.application_load_balancer.arn}"
-    port              = "90"
+    port              = "80"
     protocol          = "HTTP"
 
     default_action {
