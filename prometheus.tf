@@ -78,7 +78,7 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
         healthy_threshold   = "2"
         unhealthy_threshold = "2"
         interval            = "5"
-        matcher             = "200"
+        matcher             = "200,301"
         path                = "/graph"
         port                = "traffic-port"
         protocol            = "HTTP"
