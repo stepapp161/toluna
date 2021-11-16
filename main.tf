@@ -27,8 +27,8 @@ resource "aws_ecs_task_definition" "my_first_task" {
       "essential": true,
       "portMappings": [
         {
-          "containerPort": 8080,
-          "hostPort": 8080
+          "containerPort": 3000,
+          "hostPort": 3000
         }
       ],
       "memory": 512,
@@ -76,7 +76,7 @@ resource "aws_ecs_service" "my_first_service" {
   load_balancer {
     target_group_arn = "${aws_lb_target_group.target_group.arn}" # Reference our target group
     container_name   = "${aws_ecs_task_definition.my_first_task.family}"
-    container_port   = 8080 # Specify the container port
+    container_port   = 3000 # Specify the container port
   }
 
   network_configuration {
