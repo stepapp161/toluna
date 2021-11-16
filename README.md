@@ -5,7 +5,8 @@
 
 # Pre-requisites
 Before we get started installing the stack on AWS.
-* Ensure the latest version of terraform is installed
+* Ensure the latest version of terraform is installed.
+* Ensure Docker is installed.
 * Create an IAM role in AWS and attach the following Policies;
     *  AmazonEC2FullAccess 
     *  IAMFullAccess 
