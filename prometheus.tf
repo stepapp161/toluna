@@ -60,6 +60,18 @@ resource "aws_ecs_service" "prometheus_service" {
 }
 
 
+
+resource "aws_alb" "prometheus_load_balancer" {
+  name               = "prometheus" # Name of load balancer
+  load_balancer_type = "application"
+  subnets = [ # Reference of default subnets
+    "${aws_default_subnet.default_subnet_a.id}",
+    "${aws_default_subnet.default_subnet_b.id}"
+  ]
+  security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
+ }
+
+
  
 resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     name                 = "prometheus-tg"
@@ -68,7 +80,7 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     vpc_id      = "${aws_default_vpc.default_vpc.id}"
     deregistration_delay = 5
     target_type          = "ip"
-    depends_on           = [aws_alb.application_load_balancer]
+    depends_on           = [aws_alb.prometheus_load_balancer]
 
     lifecycle {
         create_before_destroy = true
@@ -89,7 +101,7 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
 
 
 resource "aws_alb_listener" "demo_alb_listener_ecs_prometheus_front_end_http" {
-   load_balancer_arn = "${aws_alb.application_load_balancer.arn}"
+   load_balancer_arn = "${aws_alb.prometheus_load_balancer.arn}"
     port              = "90"
     protocol          = "HTTP"
 
