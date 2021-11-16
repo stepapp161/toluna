@@ -15,13 +15,12 @@ resource "aws_ecs_task_definition" "prometheus_task" {
       ],
       "volumes": [
         {
-          "type": "bind",
-          "source": "./config/",
-          "target": "prometheus.yml /etc/prometheus"
+          "type": bind,
+          "source": ./config/,
+          "target": prometheus.yml /etc/prometheus
         }
        ],
-      "networks":
-         - "apod"
+      "networks": "apod"
     }
    ]
 }
