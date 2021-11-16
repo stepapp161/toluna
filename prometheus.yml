@@ -2,7 +2,7 @@ global:
   scrap_interval: 10s
   
 scrape_configs:
-  - job_name: 'test-lb-tf'
+  - job_name: 'prometheus_task'
   
     static_configs:
       - targets: ['0.0.0.0:9090']
