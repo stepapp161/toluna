@@ -48,7 +48,7 @@ resource "aws_ecs_service" "prometheus_service" {
 
   load_balancer {
     target_group_arn = "${aws_alb_target_group.demo_alb_target_group_ip_ecs_prometheus.arn}" # Reference our target group
-    container_name   = "${aws_ecs_task_definition.my_first_task.family}"
+    container_name   = "${aws_ecs_task_definition.prometheus_task.family}"
     container_port   = 9090 # Specify the container port
   }
 
