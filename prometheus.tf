@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "prometheus_task" {
         {
           "type": bind,
           "source": ./config/,
-          "target": /etc/prometheus
+          "target": prometheus.yml /etc/prometheus
       "networks":
          - "apod"
  
