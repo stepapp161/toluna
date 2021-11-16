@@ -75,7 +75,7 @@ resource "aws_iam_policy" "iam_full_access" {
 
 }
 
-resource "aws_iam_policy" "container_registry_full_access" {
+resource "aws_iam_policy" "amazon_ec2_container_registry_full_access" {
   policy = <<EOF
   {
     "Version": "2012-10-17",
@@ -108,7 +108,7 @@ resource "aws_iam_policy" "container_registry_full_access" {
   
 }
 
-resource "aws_iam_policy" "ecs_full_access" {
+resource "aws_iam_policy" "amazon_ecs_full_access" {
   policy = <<EOF
   {
     "Version": "2012-10-17",
@@ -325,7 +325,7 @@ resource "aws_iam_policy" "ecs_full_access" {
   
 }
 
-resource "aws_iam_policy" "elastic_load_balancer" {
+resource "aws_iam_policy" "elastic_load_balancing_full_access" {
   policy = <<EOF
   {
     "Version": "2012-10-17",
@@ -350,7 +350,7 @@ resource "aws_iam_policy" "elastic_load_balancer" {
   
 }
 
-resource "aws_iam_policy" "create_security_group" {
+resource "aws_iam_policy" "create-security-group" {
   policy = <<EOF
   {
     "Version": "2012-10-17",
