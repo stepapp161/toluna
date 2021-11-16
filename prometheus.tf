@@ -1,4 +1,8 @@
 
+resource "docker_image" "latest" {
+  name = "bitnami/prometheus:latest"
+}
+
 resource "aws_ecs_task_definition" "prometheus_task" {
   family                   = "prometheus_task" # Name of first task
   container_definitions    = <<DEFINITION
