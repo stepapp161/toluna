@@ -116,7 +116,7 @@ resource "aws_lb_target_group" "target_group" {
    unhealthy_threshold  = "2"
     interval            = "5"
     matcher             = "200,301"
-    path                = "/"
+    path                = "/graph"
     port                = "traffic-port"
     protocol            = "HTTP"
     timeout             = "3"    
