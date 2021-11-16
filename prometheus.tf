@@ -43,7 +43,7 @@ resource "aws_ecs_service" "prometheus_service" {
   cluster         = "${aws_ecs_cluster.my_cluster.id}"             # Reference of created Cluster
   task_definition = "${aws_ecs_task_definition.prometheus_task.arn}" # Reference of task our service will spin up
   launch_type     = "FARGATE"
-  desired_count   = 2 # Number of containers to deploy
+  desired_count   = 3 # Number of containers to deploy
 
 
   load_balancer {
@@ -53,7 +53,7 @@ resource "aws_ecs_service" "prometheus_service" {
   }
 
   network_configuration {
-    subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}"]
+    subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
     assign_public_ip = true # Provide our containers with public IPs
     security_groups  = ["${aws_security_group.service_security_group.id}"]
       }
