@@ -36,6 +36,30 @@ resource "aws_ecs_task_definition" "prometheus_task" {
   cpu                      = 256         # Specifying the CPU our container requires
   execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
 }
+
+
+resource "aws_ecs_service" "prometheus_service" {
+  name            = "prometheus-service"                             # Name of prometheus service
+  cluster         = "${aws_ecs_cluster.my_cluster.id}"             # Reference of created Cluster
+  task_definition = "${aws_ecs_task_definition.prometheus_task.arn}" # Reference of task our service will spin up
+  launch_type     = "FARGATE"
+  desired_count   = 2 # Number of containers to deploy
+
+
+  load_balancer {
+    target_group_arn = "${aws_alb_target_group.demo_alb_target_group_ip_ecs_prometheus.arn}" # Reference our target group
+    container_name   = "${aws_ecs_task_definition.my_first_task.family}"
+    container_port   = 9090 # Specify the container port
+  }
+
+  network_configuration {
+    subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}"]
+    assign_public_ip = true # Provide our containers with public IPs
+    security_groups  = ["${aws_security_group.service_security_group.id}"]
+      }
+}
+
+
  
 resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     name                 = "prometheus-tg"
