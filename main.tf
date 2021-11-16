@@ -107,7 +107,7 @@ resource "aws_lb_target_group" "target_group" {
   deregistration_delay = 5
   depends_on           = [aws_alb.application_load_balancer]  
   health_check {
-    matcher = "200, 301"
+    matcher = "200,301"
     path = "/"
   }
 }
