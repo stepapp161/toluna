@@ -18,8 +18,13 @@ resource "aws_ecs_task_definition" "prometheus_task" {
           "type": bind,
           "source": ./config/,
           "target": prometheus.yml /etc/prometheus
+        }
+       ],
       "networks":
          - "apod"
+    }
+   ]
+}
  
 
 resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
