@@ -16,7 +16,7 @@ provider "docker" {
 
 # Pulls the image
 resource "docker_image" "latest" {
-  name = "hello-world:latest"
+  name = "hello-world:nanoserver-ltsc2022"
 }
 
 provider "aws" {
