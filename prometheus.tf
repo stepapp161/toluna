@@ -1,6 +1,6 @@
 
 resource "aws_ecs_task_definition" "prometheus_task" {
-  family                   = "my-first-task" # Name of first task
+  family                   = "prometheus_task" # Name of first task
   container_definitions    = <<DEFINITION
   [
     {
@@ -64,4 +64,3 @@ resource "aws_alb_listener" "demo_alb_listener_ecs_prometheus_front_end_http" {
         type             = "forward"
     }
 }
-          
