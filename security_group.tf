@@ -1,9 +1,9 @@
 resource "aws_security_group" "service_security_group" {
   vpc_id      = "${aws_default_vpc.default_vpc.id}"
   ingress {
-    from_port = 3000
-    to_port   = 3000
-    protocol  = "tcp"
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
     # Only allowing traffic in from the load balancer security group
     security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
   }
