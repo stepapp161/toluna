@@ -18,11 +18,11 @@ resource "aws_ecs_cluster" "my_cluster" {
 }
 
 resource "aws_ecs_task_definition" "my_first_task" {
-  family                   = "my-first-task" # Name of first task
+  family                   = "my_first_task" # Name of first task
   container_definitions    = <<DEFINITION
   [
     {
-      "name": "my-first-task",
+      "name": "my_first_task",
       "image": "hello-world",
       "essential": true,
       "portMappings": [
@@ -66,7 +66,7 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 }
 
 resource "aws_ecs_service" "my_first_service" {
-  name            = "my-first-service"                             # Name of first service
+  name            = "my_first_service"                             # Name of first service
   cluster         = "${aws_ecs_cluster.my_cluster.id}"             # Reference of created Cluster
   task_definition = "${aws_ecs_task_definition.my_first_task.arn}" # Reference of task our service will spin up
   launch_type     = "FARGATE"
@@ -88,7 +88,7 @@ resource "aws_ecs_service" "my_first_service" {
 
 
 resource "aws_alb" "application_load_balancer" {
-  name               = "test-lb-tf" # Name of load balancer
+  name               = "test_lb_tf" # Name of load balancer
   load_balancer_type = "application"
   subnets = [ # Reference of default subnets
     "${aws_default_subnet.default_subnet_a.id}",
@@ -99,7 +99,7 @@ resource "aws_alb" "application_load_balancer" {
 
 
 resource "aws_lb_target_group" "target_group" {
-  name        = "target-group"
+  name        = "target_group"
   port        = "80"
   protocol    = "HTTP"
   target_type = "ip"
