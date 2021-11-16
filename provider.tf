@@ -16,15 +16,10 @@ provider "docker" {
 
 # Pulls the image
 resource "docker_image" "latest" {
-  name = "hello-world:latest",
-  name = "bitnami/prometheus:latest"
+  name = "hello-world:latest"
 }
 
 provider "aws" {
   region  = "us-east-2" 
 }
 
-
-#resource "docker_image" "latest" {
- # name = "bitnami/prometheus:latest"
-#}
