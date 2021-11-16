@@ -14,6 +14,7 @@ Before we get started installing the stack on AWS.
     *  AmazonECS_FullAccess 
     *  AmazonECSTaskExecutionRolePolicy 
     *  ElasticLoadBalancingReadOnly 
+ * This project was configured in the us-east-2 Region in AWS
 # Steps to run the provisioning in terraform
 1. Clone the repo
 
