@@ -76,15 +76,15 @@ resource "aws_iam_policy" "iam_full_access" {
 }
 
 resource "aws_iam_policy" "amazon_ec2_container_registry_full_access" {
-  policy_arn = arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
 }
 
 resource "aws_iam_policy" "amazon_ecs_full_access" {
-ppolicy_arn = arn:aws:iam::aws:policy/AmazonECS_FullAccess
+policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
 }
 
 resource "aws_iam_policy" "elastic_load_balancing_full_access" {
-policy_arn = arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
+policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
 }
 
 #resource "aws_iam_policy" "create-security-group" {
