@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
   container_definitions    = <<DEFINITION
   [
     {
-      "name": "my-first-task",
+      "name": "my_first_task",
       "image": "hello-world",
       "essential": true,
       "portMappings": [
