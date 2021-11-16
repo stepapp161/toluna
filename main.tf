@@ -1,21 +1,26 @@
 
+
+
+
+
+
+
 # Reference to our default VPC
 resource "aws_default_vpc" "default_vpc" {
 }
 
 # Reference to our default subnets
-resource "aws_default_subnet" "default_subnet" {
-  security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
-  availability_zone = "us-east-2"
+resource "aws_default_subnet" "default_subnet_a" {
+  availability_zone = "us-east-2a"
 }
 
-#resource "aws_default_subnet" "default_subnet_b" {
- # availability_zone = "us-east-2b"
-#}
+resource "aws_default_subnet" "default_subnet_b" {
+  availability_zone = "us-east-2b"
+}
 
-#resource "aws_default_subnet" "default_subnet_c" {
- # availability_zone = "us-east-2c"
-#}
+resource "aws_default_subnet" "default_subnet_c" {
+  availability_zone = "us-east-2c"
+}
 
 
 resource "aws_ecs_cluster" "my_cluster" {
@@ -75,45 +80,43 @@ resource "aws_ecs_service" "my_first_service" {
   cluster         = "${aws_ecs_cluster.my_cluster.id}"             # Reference of created Cluster
   task_definition = "${aws_ecs_task_definition.my_first_task.arn}" # Reference of task our service will spin up
   launch_type     = "FARGATE"
-  desired_count   = 1 # Number of containers to deploy
+  desired_count   = 3 # Number of containers to deploy
 
 
-  #load_balancer {
-   # target_group_arn = "${aws_lb_target_group.target_group.arn}" # Reference our target group
-    #container_name   = "${aws_ecs_task_definition.my_first_task.family}"
-    #container_port   = 3000 # Specify the container port
-  #}
+  load_balancer {
+    target_group_arn = "${aws_lb_target_group.target_group.arn}" # Reference our target group
+    container_name   = "${aws_ecs_task_definition.my_first_task.family}"
+    container_port   = 3000 # Specify the container port
+  }
 
   network_configuration {
-   # subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
-    subnet           = ["${aws_default_subnet.default_subnet.id}"]   
+    subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
     assign_public_ip = true # Provide our containers with public IPs
     security_groups  = ["${aws_security_group.service_security_group.id}"]
       }
 }
 
 
-#resource "aws_alb" "application_load_balancer" {
- # name               = "test-lb-tf" # Name of load balancer
-  #load_balancer_type = "application"
-  #subnets = [ # Reference of default subnets
-   # "${aws_default_subnet.default_subnet_a.id}",
-    #"${aws_default_subnet.default_subnet_b.id}",
-    #"${aws_default_subnet.default_subnet_c.id}"
-  #]
-  #security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
- #}
+resource "aws_alb" "application_load_balancer" {
+  name               = "test-lb-tf" # Name of load balancer
+  load_balancer_type = "application"
+  subnets = [ # Reference of default subnets
+    "${aws_default_subnet.default_subnet_a.id}",
+    "${aws_default_subnet.default_subnet_b.id}",
+    "${aws_default_subnet.default_subnet_c.id}"
+  ]
+  security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
+ }
 
 
-resource "aws_default_subnet" "target_group" {
+resource "aws_lb_target_group" "target_group" {
   name        = "target-group"
   port        = "80"
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = "${aws_default_vpc.default_vpc.id}" # Reference the default VPC
   deregistration_delay = 5
-  depends_on           = ["${aws_default_subnet.default_subnet.id}"]
-  #depends_on           = [aws_alb.application_load_balancer]  
+  depends_on           = [aws_alb.application_load_balancer]  
   health_check {
    healthy_threshold    = "2"
    unhealthy_threshold  = "2"
@@ -126,13 +129,12 @@ resource "aws_default_subnet" "target_group" {
   }
 }
 
-resource "aws_default_subnet" "listener" {
-  subnet_arn = "${aws_default_subnet.default_subnet.arn}" # Reference our load balancer
+resource "aws_lb_listener" "listener" {
+  load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Reference our load balancer
   port              = "80"
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = "${aws_default_subnet.target_group.arn}" # Reference our target group
+    target_group_arn = "${aws_lb_target_group.target_group.arn}" # Reference our target group
   }
 }
-
