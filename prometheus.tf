@@ -26,7 +26,6 @@ resource "aws_ecs_task_definition" "prometheus_task" {
    ]
 }
  
-
 resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     name                 = "prometheus-tg"
     port                 = "80"
