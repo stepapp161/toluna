@@ -1,5 +1,5 @@
 
-resource "docker_image" "latest" {
+resource "docker_image"  {
   name = "bitnami/prometheus:latest"
 }
 
