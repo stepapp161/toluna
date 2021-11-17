@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
   [
     {
       "name": "my_first_task",
-      "image": "hello-world",
+      "image": "rancher/hello-world",
       "essential": true,
       "portMappings": [
         {
