@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 # Reference to our default VPC
 resource "aws_default_vpc" "default_vpc" {
 }
@@ -33,7 +26,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
   [
     {
       "name": "my_first_task",
-      "image": "rancher/hello-world",
+      "image": "hello-world",
       "essential": true,
       "portMappings": [
         {
