@@ -117,16 +117,16 @@ resource "aws_lb_target_group" "target_group" {
   vpc_id      = "${aws_default_vpc.default_vpc.id}" # Reference the default VPC
   deregistration_delay = 5
   depends_on           = [aws_alb.application_load_balancer]  
-  health_check {
-   healthy_threshold    = "2"
-   unhealthy_threshold  = "2"
-    interval            = "5"
-    matcher             = "200,301"
-    path                = "/graph"
-    port                = "traffic-port"
-    protocol            = "HTTP"
-    timeout             = "3"    
-  }
+ # health_check {
+  # healthy_threshold    = "2"
+   #unhealthy_threshold  = "2"
+    #interval            = "5"
+    #matcher             = "200,301"
+    #path                = "/graph"
+    #port                = "traffic-port"
+    #protocol            = "HTTP"
+    #timeout             = "3"    
+  #}
 }
 
 resource "aws_lb_listener" "listener" {
