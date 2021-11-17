@@ -16,7 +16,7 @@ provider "docker" {
 
 # Pulls the image
 resource "docker_image" "latest" {
-  name = "rancher/hello-world:latest"
+  name = "hello-world:latest"
 }
 
 provider "aws" {
