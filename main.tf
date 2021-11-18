@@ -28,12 +28,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
       "name": "my_first_task",
       "image": "hello-world:latest",
       "essential": true,
-      "portMappings": [
-        {
-          "containerPort": 3000,
-          "hostPort": 3000
-        }
-      ],
+      "portMappings": [{"containerPort": "3000"}],
       "memory": 512,
       "cpu": 256
     }
