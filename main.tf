@@ -34,7 +34,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
           "hostPort": 3000
         }
       ],
-      "memory": 1GB,
+      "memory": 1,
       "cpu": 512
     }
   ]
