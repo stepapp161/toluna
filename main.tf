@@ -26,7 +26,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
   [
     {
       "name": "my_first_task",
-      "image": "hello-world",
+      "image": "${docker_image.latest.hello-world}",
       "essential": true,
       "portMappings": [
         {
