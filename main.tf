@@ -72,7 +72,7 @@ resource "aws_ecs_service" "my_first_service" {
 
 
   load_balancer {
-    target_group_arn = "${aws_lb_target_group.target_group.arn}" # Reference our target group
+    target_group_arn = "${aws_alb_target_group.target_group.arn}" # Reference our target group
     container_name   = "${aws_ecs_task_definition.my_first_task.family}"
     container_port   = 3000 # Specify the container port
   }
@@ -97,7 +97,7 @@ resource "aws_alb" "application_load_balancer" {
  }
 
 
-resource "aws_lb_target_group" "target_group" {
+resource "aws_alb_target_group" "target_group" {
   name        = "target-group"
   port        = "80"
   protocol    = "HTTP"
@@ -122,7 +122,7 @@ resource "aws_lb_target_group" "target_group" {
   }
 }
 
-resource "aws_lb_listener" "listener" {
+resource "aws_alb_listener" "listener" {
   load_balancer_arn = "${aws_alb.application_load_balancer.id}" # Reference our load balancer
   port              = "80"
   protocol          = "HTTP"
