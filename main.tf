@@ -103,8 +103,9 @@ resource "aws_lb_target_group" "target_group" {
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = "${aws_default_vpc.default_vpc.id}" # Reference the default VPC  
+  depends_on           = [aws_alb.application_load_balancer]
   health_check {
-    matcher             = "200,301,302"
+    matcher             = "300"
     path                = "/" 
   }
 }
