@@ -75,7 +75,7 @@ resource "aws_ecs_service" "prometheus_service" {
  
 resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     name                 = "prometheus-tg"
-    port                 = "80"
+    port                 = "90"
     protocol             = "HTTP"
     vpc_id      = "${aws_default_vpc.default_vpc.id}"
     deregistration_delay = 5
