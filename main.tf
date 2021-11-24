@@ -101,12 +101,17 @@ resource "aws_lb_target_group" "target_group" {
   name        = "target-group"
   port        = "80"
   protocol    = "HTTP"
-  target_type = "ip"
+  target_type = "instance"
   vpc_id      = "${aws_default_vpc.default_vpc.id}" # Reference the default VPC  
-  depends_on           = [aws_alb.application_load_balancer]
+  depends_on  = [aws_alb.application_load_balancer]
   health_check {
-    matcher             = "300"
-    path                = "/" 
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    interval            = 30
+    matcher             = "200"
+    path                = "/"
+    protocol            = "HTTP"
+    
   }
 }
 
