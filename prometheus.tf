@@ -79,7 +79,7 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     protocol             = "HTTP"
     vpc_id      = "${aws_default_vpc.default_vpc.id}"
     deregistration_delay = 5
-    target_type          = "ip"
+    target_type          = "instance"
     depends_on           = [aws_alb.application_load_balancer]
 
     lifecycle {
@@ -89,8 +89,8 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     health_check {
         healthy_threshold   = "2"
         unhealthy_threshold = "2"
-        interval            = "5"
-        matcher             = "200,301,302"
+        interval            = "30"
+        matcher             = "200"
         path                = "/graph"
         port                = "traffic-port"
         protocol            = "HTTP"
