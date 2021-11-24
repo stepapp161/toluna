@@ -4,7 +4,7 @@ resource "docker_image" "ubuntu" {
 }
 
 resource "aws_ecs_task_definition" "prometheus_task" {
-  family                   = "prometheus_task" # Name of first task
+  family                   = "prometheus_task" # Name of prometheus task
   container_definitions    = <<DEFINITION
   [
     {
@@ -90,7 +90,7 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
         healthy_threshold   = "2"
         unhealthy_threshold = "2"
         interval            = "5"
-        matcher             = "200,301"
+        matcher             = "200,301,302"
         path                = "/graph"
         port                = "traffic-port"
         protocol            = "HTTP"
