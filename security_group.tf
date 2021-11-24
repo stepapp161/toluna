@@ -19,8 +19,8 @@ resource "aws_security_group" "service_security_group" {
 resource "aws_security_group" "load_balancer_security_group" {
     vpc_id      = "${aws_default_vpc.default_vpc.id}"
   ingress {
-    from_port   = [80, 90]
-    to_port     = [80, 90]
+    from_ports   = "80, 90"
+    to_ports     = "80, 90"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Allowing traffic in from all sources
   }
