@@ -105,6 +105,11 @@ resource "aws_lb_target_group" "target_group" {
   vpc_id      = "${aws_default_vpc.default_vpc.id}" # Reference the default VPC  
   depends_on  = [aws_alb.application_load_balancer]
   deregistration_delay = 60
+  
+  lifecycle {
+        create_before_destroy = true
+    }
+  
   health_check {
     healthy_threshold   = 2
     unhealthy_threshold = 2
@@ -112,6 +117,7 @@ resource "aws_lb_target_group" "target_group" {
     matcher             = "200"
     path                = "/"
     protocol            = "HTTP"
+    port                = "traffic-port"
     
   }
 }
