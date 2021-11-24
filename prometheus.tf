@@ -79,7 +79,7 @@ resource "aws_alb_target_group" "demo_alb_target_group_ip_ecs_prometheus" {
     protocol             = "HTTP"
     vpc_id      = "${aws_default_vpc.default_vpc.id}"
     deregistration_delay = 5
-    target_type          = "instance"
+    target_type          = "ip"
     depends_on           = [aws_alb.application_load_balancer]
 
     lifecycle {
